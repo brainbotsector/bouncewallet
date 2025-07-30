@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import { randomUUID } from "crypto";
+import fs from "fs";
 
 dotenv.config({ path: "./.env" });
 console.log("✅ env loaded:", !!process.env.PLAID_CLIENT_ID, !!process.env.PLAID_SECRET);
 
 // await mongoose.connect(process.env.MONGO_URI);
-const fs = require('fs');
-const ca = [fs.readFileSync('/etc/ssl/certs/ca-certificates.crt')];
+const ca = [await fs.promises.readFile('/etc/ssl/certs/ca-certificates.crt')];
 
 await mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
