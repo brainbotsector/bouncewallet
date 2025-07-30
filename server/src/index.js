@@ -9,12 +9,15 @@ dotenv.config({ path: "./.env" });
 console.log("✅ env loaded:", !!process.env.PLAID_CLIENT_ID, !!process.env.PLAID_SECRET);
 
 // await mongoose.connect(process.env.MONGO_URI);
+const fs = require('fs');
+const ca = [fs.readFileSync('/etc/ssl/certs/ca-certificates.crt')];
+
 await mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   ssl: true,
   sslValidate: false,
-  sslCA: "/etc/ssl/certs/ca-certificates.crt",
+  sslCA: ca,
 });
 
 // ---------- Plaid client ----------
